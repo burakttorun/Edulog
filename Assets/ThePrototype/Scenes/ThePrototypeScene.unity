@@ -902,6 +902,10 @@ MonoBehaviour:
     smoothTime: 0.2
     jumpHeight: 2
     visualAngleLimit: 80
+    rayDistance: 3
+    rayMask:
+      serializedVersion: 2
+      m_Bits: 128
 --- !u!143 &1926939777
 CharacterController:
   m_ObjectHideFlags: 0

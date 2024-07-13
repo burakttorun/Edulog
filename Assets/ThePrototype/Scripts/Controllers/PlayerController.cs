@@ -1,7 +1,9 @@
 using System;
+using ThePrototype.Scripts.Base.Interactable;
 using ThePrototype.Scripts.InputHandle;
 using ThePrototype.Scripts.Utilities;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ThePrototype.Scripts.Controller
 {
@@ -13,6 +15,8 @@ namespace ThePrototype.Scripts.Controller
         public float smoothTime;
         public float jumpHeight;
         public float visualAngleLimit;
+        public float rayDistance;
+        public LayerMask rayMask;
     }
 
     public class PlayerController : MonoBehaviour
@@ -83,7 +87,6 @@ namespace ThePrototype.Scripts.Controller
             if (movementDirection.magnitude > _zeroF)
             {
                 HandleCharacterController(movementDirection);
-                SmoothSpeed(movementDirection.magnitude);
             }
 
             _playerVelocity.y += _gravity * Time.deltaTime;
@@ -120,6 +123,19 @@ namespace ThePrototype.Scripts.Controller
             if (_isGrounded)
             {
                 _playerVelocity.y = Mathf.Sqrt(PlayerSetting.jumpHeight * -_gravity);
+            }
+        }
+
+        private void Interaction()
+        {
+            Ray ray = new Ray(_mainCamera.transform.position, _mainCamera.transform.forward);
+            RaycastHit hitInfo;
+            if (Physics.Raycast(ray, out hitInfo, PlayerSetting.rayDistance, PlayerSetting.rayMask))
+            {
+                if (hitInfo.collider.TryGetComponent(out IInteractable interactable))
+                {
+                    Debug.Log(interactable.PromptMessage);
+                }
             }
         }
     }
