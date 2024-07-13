@@ -3,6 +3,7 @@ using ThePrototype.Scripts.Base.Interactable;
 using ThePrototype.Scripts.InputHandle;
 using ThePrototype.Scripts.Utilities;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace ThePrototype.Scripts.Controller
@@ -21,6 +22,8 @@ namespace ThePrototype.Scripts.Controller
 
     public class PlayerController : MonoBehaviour
     {
+        public event UnityAction<string> OnPromptTextUpdate;
+
         [field: Header("References")]
         [field: SerializeField]
         CharacterController CharacterController { get; set; }
@@ -48,6 +51,8 @@ namespace ThePrototype.Scripts.Controller
         private Vector3 _playerVelocity;
         private float _xAxisRotation;
 
+        private IInteractable _currentInteractableEntity;
+
         private void Awake()
         {
             _zeroF = Constant.ZeroF;
@@ -60,6 +65,7 @@ namespace ThePrototype.Scripts.Controller
         {
             Input.Jump += Jump;
             Input.Look += LookHandle;
+            Input.Interact += TakeAction;
         }
 
 
@@ -67,11 +73,14 @@ namespace ThePrototype.Scripts.Controller
         {
             Input.Jump -= Jump;
             Input.Look -= LookHandle;
+            Input.Interact -= TakeAction;
         }
 
         private void Update()
         {
             _isGrounded = CharacterController.isGrounded;
+
+            Interaction();
         }
 
         private void FixedUpdate()
@@ -118,9 +127,9 @@ namespace ThePrototype.Scripts.Controller
             _currentSpeed = Mathf.SmoothDamp(_currentSpeed, value, ref _velocity, PlayerSetting.smoothTime);
         }
 
-        private void Jump()
+        private void Jump(bool isPressed)
         {
-            if (_isGrounded)
+            if (isPressed && _isGrounded)
             {
                 _playerVelocity.y = Mathf.Sqrt(PlayerSetting.jumpHeight * -_gravity);
             }
@@ -132,10 +141,23 @@ namespace ThePrototype.Scripts.Controller
             RaycastHit hitInfo;
             if (Physics.Raycast(ray, out hitInfo, PlayerSetting.rayDistance, PlayerSetting.rayMask))
             {
-                if (hitInfo.collider.TryGetComponent(out IInteractable interactable))
+                if (hitInfo.collider.TryGetComponent(out _currentInteractableEntity))
                 {
-                    Debug.Log(interactable.PromptMessage);
+                    OnPromptTextUpdate?.Invoke(_currentInteractableEntity.PromptMessage);
                 }
+            }
+            else
+            {
+                OnPromptTextUpdate?.Invoke(string.Empty);
+                _currentInteractableEntity = null;
+            }
+        }
+
+        private void TakeAction(bool isPressed)
+        {
+            if (isPressed && _currentInteractableEntity != null)
+            {
+                _currentInteractableEntity.Interact();
             }
         }
     }

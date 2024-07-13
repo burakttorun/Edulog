@@ -14,7 +14,8 @@ namespace ThePrototype.Scripts.InputHandle
         public event UnityAction<Vector2, bool> Look = delegate { };
         public event UnityAction EnableMouseControlCamera = delegate { };
         public event UnityAction DisableMouseControlCamera = delegate { };
-        public event UnityAction Jump = delegate { };
+        public event UnityAction<bool> Jump = delegate { };
+        public event UnityAction<bool> Interact = delegate { };
 
 
         private PlayerInputActions _inputActions;
@@ -34,12 +35,12 @@ namespace ThePrototype.Scripts.InputHandle
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            Move.Invoke(context.ReadValue<Vector2>());
+            Move?.Invoke(context.ReadValue<Vector2>());
         }
 
         public void OnLook(InputAction.CallbackContext context)
         {
-            Look.Invoke(context.ReadValue<Vector2>(), IsDeviceMouse(context));
+            Look?.Invoke(context.ReadValue<Vector2>(), IsDeviceMouse(context));
         }
 
         private bool IsDeviceMouse(InputAction.CallbackContext context) => context.control.device.name == "Mouse";
@@ -54,10 +55,10 @@ namespace ThePrototype.Scripts.InputHandle
             switch (context.phase)
             {
                 case InputActionPhase.Started:
-                    EnableMouseControlCamera.Invoke();
+                    EnableMouseControlCamera?.Invoke();
                     break;
                 case InputActionPhase.Canceled:
-                    DisableMouseControlCamera.Invoke();
+                    DisableMouseControlCamera?.Invoke();
                     break;
             }
         }
@@ -69,7 +70,29 @@ namespace ThePrototype.Scripts.InputHandle
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            Jump.Invoke();
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    Jump?.Invoke(true);
+                    break;
+                case InputActionPhase.Canceled:
+                    Jump?.Invoke(false);
+                    break;
+            }
+            
+        }
+
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    Interact?.Invoke(true);
+                    break;
+                case InputActionPhase.Canceled:
+                    Interact?.Invoke(false);
+                    break;
+            }
         }
     }
 }

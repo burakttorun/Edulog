@@ -8,6 +8,6 @@ namespace ThePrototype.Scripts.Base.Interactable
     {
         public string PromptMessage { get; set; }
 
-        public void Interact() { }
+        public void Interact();
     }
 }
