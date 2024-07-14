@@ -24949,13 +24949,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837723856}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.681, z: 0.132}
+  m_LocalRotation: {x: -0.00000008940696, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.017411627, z: 0.014117472}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 330585546}
-  m_Father: {fileID: 1926939775}
+  m_Father: {fileID: 1864329669}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &837925577
 PrefabInstance:
@@ -54517,9 +54517,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95365376127056996, guid: 6a71738add6483c4e8a1479556240d54,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 0125309e38bea8a48bc578cf8f220634, type: 3}
+    - target: {fileID: 95365376127056996, guid: 6a71738add6483c4e8a1479556240d54,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6008de5fe50b31f408761d36790b53f1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4094388562602528, guid: 6a71738add6483c4e8a1479556240d54,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 837723857}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a71738add6483c4e8a1479556240d54, type: 3}
 --- !u!1001 &1862734616
@@ -54675,6 +54689,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4825856277070036, guid: 854337282489ba446a9c04fb64478a8d,
     type: 3}
   m_PrefabInstance: {fileID: 1863589224}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1864329669 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4094388562602528, guid: 6a71738add6483c4e8a1479556240d54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1858332004}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1864507662
 PrefabInstance:
@@ -56200,7 +56220,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 918796561}
-  - {fileID: 837723857}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1926939776

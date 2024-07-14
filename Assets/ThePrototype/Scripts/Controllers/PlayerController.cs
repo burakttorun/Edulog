@@ -45,6 +45,8 @@ namespace ThePrototype.Scripts.Controller
 
         #endregion
 
+        private static readonly int Speed = Animator.StringToHash("Speed");
+
         private float _currentSpeed;
         private float _velocity;
         private bool _isGrounded;
@@ -81,11 +83,13 @@ namespace ThePrototype.Scripts.Controller
             _isGrounded = CharacterController.isGrounded;
 
             Interaction();
+            UpdateAnimator();
         }
 
         private void FixedUpdate()
         {
             HandleMovement();
+            
         }
 
         private void HandleMovement()
@@ -96,6 +100,11 @@ namespace ThePrototype.Scripts.Controller
             if (movementDirection.magnitude > _zeroF)
             {
                 HandleCharacterController(movementDirection);
+                SmoothSpeed(movementDirection.magnitude);
+            }
+            else
+            {
+                SmoothSpeed(_zeroF);
             }
 
             _playerVelocity.y += _gravity * Time.deltaTime;
@@ -159,6 +168,11 @@ namespace ThePrototype.Scripts.Controller
             {
                 _currentInteractableEntity.Interact();
             }
+        }
+
+        private void UpdateAnimator()
+        {
+            Animator.SetFloat(Speed, _currentSpeed);
         }
     }
 }
