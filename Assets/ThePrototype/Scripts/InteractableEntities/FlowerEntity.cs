@@ -2,23 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ThePrototype.Scripts.Base.Interactable;
+using ThePrototype.Scripts.Controller;
 using UnityEngine;
 
 namespace ThePrototype.Scripts.InteractableEntities
 {
     public class FlowerEntity : MonoBehaviour, IInteractable
     {
+        public Transform Transform { get; set; }
         public string PromptMessage { get; set; }
+
+        [field: SerializeField] public FlowerSetting Setting { get; set; }
 
         private void Awake()
         {
-            PromptMessage = "Pick the flower from the ground.";
+            Transform = transform;
+            PromptMessage = Setting.PromptMessageOnGround;
         }
 
         public void Interact()
         {
-            gameObject.SetActive(false);
-            Debug.Log(PromptMessage);
+            PromptMessage = transform.parent != null
+                ? Setting.PromptMessageOnHand
+                : Setting.PromptMessageOnGround;
         }
     }
 }

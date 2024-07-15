@@ -31,6 +31,7 @@ namespace ThePrototype.Scripts.Controller
         [field: SerializeField] Animator Animator { get; set; }
 
         [field: SerializeField] InputReader Input { get; set; }
+        [field: SerializeField] private Transform HoldPoint { get; set; }
 
         [field: Header("Settings")]
         [field: SerializeField]
@@ -54,6 +55,7 @@ namespace ThePrototype.Scripts.Controller
         private float _xAxisRotation;
 
         private IInteractable _currentInteractableEntity;
+        private GameObject _currentHeldEntity;
 
         private void Awake()
         {
@@ -89,7 +91,6 @@ namespace ThePrototype.Scripts.Controller
         private void FixedUpdate()
         {
             HandleMovement();
-            
         }
 
         private void HandleMovement()
@@ -164,10 +165,40 @@ namespace ThePrototype.Scripts.Controller
 
         private void TakeAction(bool isPressed)
         {
-            if (isPressed && _currentInteractableEntity != null)
+            if (isPressed && _currentInteractableEntity != null && _currentHeldEntity == null)
             {
-                _currentInteractableEntity.Interact();
+                PickUpEntity();
             }
+            else if (isPressed && _currentHeldEntity != null)
+            {
+                PutDownEntity();
+            }
+        }
+
+        private void PutDownEntity()
+        {
+            _currentHeldEntity.transform.parent = null;
+            if (_currentHeldEntity.TryGetComponent(out IInteractable interactable))
+            {
+                interactable.Interact();
+            }
+
+            _currentHeldEntity.AddComponent<Rigidbody>();
+            _currentHeldEntity = null;
+        }
+
+        private void PickUpEntity()
+        {
+            _currentInteractableEntity.Transform.parent = HoldPoint;
+            _currentInteractableEntity.Interact();
+            _currentHeldEntity = _currentInteractableEntity.Transform.gameObject;
+            if (_currentHeldEntity.TryGetComponent(out Rigidbody rb))
+            {
+                Destroy(rb);
+            }
+
+            _currentInteractableEntity.Transform.localPosition = Vector3.zero;
+            _currentInteractableEntity.Transform.rotation = HoldPoint.rotation;
         }
 
         private void UpdateAnimator()
