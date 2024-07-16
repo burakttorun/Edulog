@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7328a553d04188f4782ef77cec016b6b, type: 3}
-  m_Name: DefaultFlowerSettings
+  m_Name: DefaultFlowerHoldableSettings
   m_EditorClassIdentifier: 
   <PromptMessageOnGround>k__BackingField: Pick the flower from the ground.(Press
     E)
-  <PromptMessageOnHand>k__BackingField: Put down.(Press E)
+  <PromptMessageOnHand>k__BackingField: Put down.(Press E) Collect (Press F)

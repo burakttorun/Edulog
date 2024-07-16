@@ -1,4 +1,5 @@
 using System;
+using ThePrototype.Scripts.Base;
 using ThePrototype.Scripts.Base.Interactable;
 using ThePrototype.Scripts.InputHandle;
 using ThePrototype.Scripts.Utilities;
@@ -34,8 +35,7 @@ namespace ThePrototype.Scripts.Controller
         [field: SerializeField] private Transform HoldPoint { get; set; }
 
         [field: Header("Settings")]
-        [field: SerializeField]
-        PlayerSetting PlayerSetting { get; set; }
+        [field: SerializeField] PlayerSetting PlayerSetting { get; set; }
 
         #region CashedData
 
@@ -70,20 +70,20 @@ namespace ThePrototype.Scripts.Controller
             Input.Jump += Jump;
             Input.Look += LookHandle;
             Input.Interact += TakeAction;
+            Input.AlternateInteract += PutItemToInventory;
         }
-
 
         private void OnDisable()
         {
             Input.Jump -= Jump;
             Input.Look -= LookHandle;
             Input.Interact -= TakeAction;
+            Input.AlternateInteract -= PutItemToInventory;
         }
 
         private void Update()
         {
             _isGrounded = CharacterController.isGrounded;
-
             Interaction();
             UpdateAnimator();
         }
@@ -204,6 +204,17 @@ namespace ThePrototype.Scripts.Controller
         private void UpdateAnimator()
         {
             Animator.SetFloat(Speed, _currentSpeed);
+        }
+
+        private void PutItemToInventory(bool isPressed)
+        {
+            if (isPressed &&_currentHeldEntity != null)
+            {
+                if (_currentHeldEntity.TryGetComponent(out ICollectable item))
+                {
+                    item.Collected();
+                }
+            }
         }
     }
 }

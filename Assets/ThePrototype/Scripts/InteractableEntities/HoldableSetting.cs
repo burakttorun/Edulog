@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace ThePrototype.Scripts.InteractableEntities
 {
-    [CreateAssetMenu(menuName = "Edulog/InteractableEntities/Flower")]
-    public class FlowerSetting : ScriptableObject
+    [CreateAssetMenu(menuName = "Edulog/HoldableEntities/Holdable")]
+    public class HoldableSetting : ScriptableObject
     {
         [field: SerializeField] public String PromptMessageOnGround { get; set; }
         [field: SerializeField] public String PromptMessageOnHand { get; set; }

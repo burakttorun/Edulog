@@ -16,6 +16,8 @@ namespace ThePrototype.Scripts.InputHandle
         public event UnityAction DisableMouseControlCamera = delegate { };
         public event UnityAction<bool> Jump = delegate { };
         public event UnityAction<bool> Interact = delegate { };
+        public event UnityAction<bool> AlternateInteract = delegate { };
+        public event UnityAction<bool> Inventory = delegate { };
 
 
         private PlayerInputActions _inputActions;
@@ -91,6 +93,31 @@ namespace ThePrototype.Scripts.InputHandle
                     break;
                 case InputActionPhase.Canceled:
                     Interact?.Invoke(false);
+                    break;
+            }
+        }
+        public void OnAlternateInteract(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    AlternateInteract?.Invoke(true);
+                    break;
+                case InputActionPhase.Canceled:
+                    AlternateInteract?.Invoke(false);
+                    break;
+            }
+        }
+
+        public void OnInventory(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    Inventory?.Invoke(true);
+                    break;
+                case InputActionPhase.Canceled:
+                    Inventory?.Invoke(false);
                     break;
             }
         }

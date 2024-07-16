@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4369952246328094}
   - component: {fileID: 33978062861031464}
   - component: {fileID: 23982947288414646}
-  - component: {fileID: 2164849348981434830}
   - component: {fileID: 9070064456323567266}
+  - component: {fileID: 8972743938134827967}
   m_Layer: 7
   m_Name: SM_Env_Flowers_01
   m_TagString: Untagged
@@ -85,20 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2164849348981434830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259433141712316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b0c3a6182225f346b85b694f6206f0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Setting>k__BackingField: {fileID: 11400000, guid: 120fbf7c26719ba4089c4faae81d3d12,
-    type: 2}
 --- !u!65 &9070064456323567266
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -120,3 +106,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.5, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8972743938134827967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259433141712316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf513daf624d774399a522cc047d250, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <HoldableSetting>k__BackingField: {fileID: 11400000, guid: 120fbf7c26719ba4089c4faae81d3d12,
+    type: 2}
+  <CollectableSetting>k__BackingField: {fileID: 11400000, guid: f14b73e626fe5ae488bb2d66e356b0e0,
+    type: 2}
